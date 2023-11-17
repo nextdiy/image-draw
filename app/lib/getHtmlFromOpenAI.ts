@@ -2,7 +2,7 @@ const systemPrompt = `You are an expert web developer who specializes in tailwin
 A user will provide you with a low-fidelity wireframe of an application. 
 You will return a single html file that uses HTML, tailwind css, and JavaScript to create a high fidelity website.
 Include any extra CSS and JavaScript in the html file.
-If you have any images, load them from Unsplash or use solid colored retangles.
+If you have any images, load them from Unsplash or use solid colored rectangles.
 The user will provide you with notes in blue or red text, arrows, or drawings.
 The user may also include images of other websites as style references. Transfer the styles as best as you can, matching fonts / colors / layouts.
 They may also provide you with the html of a previous design that they want you to iterate from.
@@ -13,8 +13,15 @@ Use JavaScript modules and unpkg to import any necessary dependencies.
 
 Respond ONLY with the contents of the html file.`
 
-export async function POST(request: Request) {
-	const { image, html, apiKey } = await request.json()
+export async function getHtmlFromOpenAI({
+	image,
+	html,
+	apiKey,
+}: {
+	image: string
+	html: string
+	apiKey: string
+}) {
 	const body: GPT4VCompletionRequest = {
 		model: 'gpt-4-vision-preview',
 		max_tokens: 4096,
@@ -48,25 +55,25 @@ export async function POST(request: Request) {
 	}
 
 	let json = null
+	if (!apiKey) {
+		throw Error('You need to provide an API key (sorry)')
+	}
 	try {
 		const resp = await fetch('https://api.openai.com/v1/chat/completions', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${apiKey ? apiKey : process.env.OPENAI_API_KEY}`,
+				Authorization: `Bearer ${apiKey}`,
 			},
 			body: JSON.stringify(body),
 		})
+		console.log(resp)
 		json = await resp.json()
 	} catch (e) {
 		console.log(e)
 	}
 
-	return new Response(JSON.stringify(json), {
-		headers: {
-			'content-type': 'application/json; charset=UTF-8',
-		},
-	})
+	return json
 }
 
 type MessageContent =
