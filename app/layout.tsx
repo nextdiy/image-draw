@@ -3,13 +3,26 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
-const TITLE = 'Free Image draw | Image editor'
-const DESCRIPTION = 'a little while board'
+const TITLE = 'Convert Design UI or Image to HTML and CSS Code Online | GPT-4 Vision'
+const DESCRIPTION = 'Transform UI designs or images into high-quality HTML, CSS, and JavaScript code with ease.'
 // const TWITTER_HANDLE = '@tldraw'
 // const TWITTER_CARD = 'social-twitter.png'
 const FACEBOOK_CARD = 'social-og.png'
 const THEME_COLOR = '#FFFFFF'
-const SITE_URL = 'https://makereal.tldraw.com'
+const SITE_URL = 'https://soputer.com'
+
+//Convert image to HTML and CSS code Online | GPT-4 Vision
+
+// 关键词
+/**
+ * 
+ * Favicon Generator
+ * 
+ * create favicon
+ * 
+ * create favicon from png
+ * 
+ */
 
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
@@ -78,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			</head>
 			<body className={inter.className}>
 				{children}
-				<Analytics />
+				{/* <Analytics /> */}
 			</body>
 		</html>
 	)
